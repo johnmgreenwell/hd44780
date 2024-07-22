@@ -1,0 +1,21 @@
+{
+    "name": "hd44780",
+    "version": "1.0.0",
+    "description": "Portable, multi-instance driver for Hitachi HD44780 character LCDs",
+    "keywords": "embedded, driver, hal, character, lcd, hd44780",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/johnmgreenwell/hd44780"
+    },
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*",
+		"dependencies": {
+        "Arduino Print Class": "https://github.com/arduino/ArduinoCore-avr.git"
+    },
+    "build": {
+        "flags": [
+        "-I../../include"
+        ]
+    }
+}
