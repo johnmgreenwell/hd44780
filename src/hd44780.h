@@ -1,8 +1,12 @@
-#ifndef LiquidCrystal_h
-#define LiquidCrystal_h
+#ifndef HD44780_h
+#define HD44780_h
 
+#include "hal.h"
 #include <inttypes.h>
 #include "Print.h"
+
+namespace PeripheralIO
+{
 
 // commands
 #define LCD_CLEARDISPLAY 0x01
@@ -42,22 +46,15 @@
 #define LCD_5x10DOTS 0x04
 #define LCD_5x8DOTS 0x00
 
-class LiquidCrystal : public Print {
-public:
-  LiquidCrystal(uint8_t rs, uint8_t enable,
-		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
-  LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
-  LiquidCrystal(uint8_t rs, uint8_t rw, uint8_t enable,
-		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
-  LiquidCrystal(uint8_t rs, uint8_t enable,
-		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
+typedef enum { FOUR_BIT_MODE = 4, EIGHT_BIT_MODE = 8 } hd44780_lcd_mode;
 
-  void init(uint8_t fourbitmode, uint8_t rs, uint8_t rw, uint8_t enable,
-	    uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-	    uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7);
+class HD44780 : public Print {
+public:
+  HD44780(hd44780_lcd_mode mode, const uint8_t* data_pins, uint8_t rs, uint8_t enable);
+
+  HD44780(hd44780_lcd_mode mode, const uint8_t* data_pins, uint8_t rs, uint8_t rw, uint8_t enable);
+
+  void init(uint8_t mode, const uint8_t* data_pins, uint8_t rs, uint8_t rw, uint8_t enable);
     
   void begin(uint8_t cols, uint8_t rows, uint8_t charsize = LCD_5x8DOTS);
 
@@ -90,11 +87,12 @@ private:
   void write8bits(uint8_t);
   void pulseEnable();
 
-  uint8_t _rs_pin; // LOW: command. HIGH: character.
-  uint8_t _rw_pin; // LOW: write to LCD. HIGH: read from LCD.
-  uint8_t _enable_pin; // activated by a HIGH pulse.
-  uint8_t _data_pins[8];
+  HAL::GPIOPort _data_pins;
+  HAL::GPIO _rs_pin; // LOW: command. HIGH: character.
+  HAL::GPIO _rw_pin; // LOW: write to LCD. HIGH: read from LCD.
+  HAL::GPIO _enable_pin; // activated by a HIGH pulse.
 
+  bool    _rw_active;
   uint8_t _displayfunction;
   uint8_t _displaycontrol;
   uint8_t _displaymode;
@@ -105,4 +103,8 @@ private:
   uint8_t _row_offsets[4];
 };
 
-#endif
+}
+
+#endif // HD44780_h
+
+// EOF
