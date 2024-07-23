@@ -10,9 +10,6 @@
     "license": "MIT",
     "frameworks": "*",
     "platforms": "*",
-		"dependencies": {
-        "Arduino Print Class": "https://github.com/arduino/ArduinoCore-avr.git"
-    },
     "build": {
         "flags": [
         "-I../../include"
