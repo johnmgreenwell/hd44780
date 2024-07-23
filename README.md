@@ -17,6 +17,7 @@ For this modified version, the following hardware abstraction layer (HAL) requir
 * A delay_us() function in the HAL namespace that delays an accurate microseconds to be used for timing.
 
 Some further requirements may also be found. Typically, these will mirror the Arduino framework and should be added to `hal.h`.
+* For example, this driver depends on the Arduino framework "Print" class, and an equivalent will need to be provided, in the HAL or otherwise.
 
 For more information about this library please visit us at
 
