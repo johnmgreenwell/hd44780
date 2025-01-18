@@ -7,7 +7,7 @@
         "type": "git",
         "url": "https://github.com/johnmgreenwell/hd44780"
     },
-    "license": "MIT",
+    "license": "LGPL-3.0",
     "frameworks": "*",
     "platforms": "*",
     "build": {
